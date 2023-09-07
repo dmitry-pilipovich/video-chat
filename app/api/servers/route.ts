@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(server);
   } catch (err) {
-    console.error("[SERVERS_POST]", err);
+    console.error("[SERVERS_ID_UPDATE]", err);
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
