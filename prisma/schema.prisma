@@ -27,16 +27,16 @@ model Server {
   id         String @id @default(uuid())
   name       String
   imageUrl   String @db.Text
-  inviteCode String @db.Text
+  inviteCode String @unique
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  members Member[]
-  channels   Channel[]
+  members  Member[]
+  channels Channel[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([profileId])
 }
