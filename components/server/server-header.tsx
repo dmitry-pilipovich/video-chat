@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ChevronDown,
@@ -9,9 +9,9 @@ import {
   UserPlus,
   Users
 } from "lucide-react";
-import { MemberRole } from "@prisma/client"
+import { MemberRole } from "@prisma/client";
 
-import { ServerWithMembersWithProfiles } from "@/types"
+import { ServerWithMembersWithProfiles } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,8 +22,8 @@ import {
 import { useModal } from "@/hooks/use-modal-store";
 
 interface ServerHeaderProps {
-  server: ServerWithMembersWithProfiles,
-  role?: MemberRole,
+  server: ServerWithMembersWithProfiles;
+  role?: MemberRole;
 }
 
 export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
@@ -34,10 +34,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className="focus:outline-none"
-        asChild
-      >
+      <DropdownMenuTrigger className="focus:outline-none" asChild>
         <button
           className="w-full text-md font-semibold px-3 flex
           items-center h-12 border-neutral-200 dark:border-neutral-800
@@ -73,22 +70,19 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {isAdmin && (
           <DropdownMenuItem
             className="px-3 py-2 text-sm cursor-pointer"
+            onClick={() => onOpen("members", { server })}
           >
             Manage Members
             <Users className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
         {isModerator && (
-          <DropdownMenuItem
-            className="px-3 py-2 text-sm cursor-pointer"
-          >
+          <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
             Create Channel
             <PlusCircle className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
-        {isModerator && (
-          <DropdownMenuSeparator />
-        )}
+        {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
           <DropdownMenuItem
             className="text-rose-600 dark:text-rose-400
@@ -109,5 +103,5 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
