@@ -10,8 +10,8 @@ export const currentProfile = async () => {
 
   const profile = await db.profile.findFirst({
     where: {
-      userId,
-    },
+      userId
+    }
   });
 
   return profile;

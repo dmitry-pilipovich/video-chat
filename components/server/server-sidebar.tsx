@@ -6,7 +6,6 @@ import { ServerHeader } from "@/components/server/server-header";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-
 interface ServerSidebarProps {
   serverId: string;
 }
@@ -25,40 +24,47 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
     include: {
       channels: {
         orderBy: {
-          createdAt: "asc",
+          createdAt: "asc"
         }
       },
       members: {
         include: {
-          profile: true,
+          profile: true
         },
         orderBy: {
-          role: "asc",
+          role: "asc"
         }
       }
     }
   });
 
-  const textChannels = server?.channels.filter(channel => channel.type === ChannelType.TEXT);
-  const audioChannels = server?.channels.filter(channel => channel.type === ChannelType.AUDIO);
-  const videoChannels = server?.channels.filter(channel => channel.type === ChannelType.VIDEO);
+  const textChannels = server?.channels.filter(
+    channel => channel.type === ChannelType.TEXT
+  );
+  const audioChannels = server?.channels.filter(
+    channel => channel.type === ChannelType.AUDIO
+  );
+  const videoChannels = server?.channels.filter(
+    channel => channel.type === ChannelType.VIDEO
+  );
 
-  const members = server?.members.filter((member) => member.profileId !== profile.id);
+  const members = server?.members.filter(
+    member => member.profileId !== profile.id
+  );
 
   if (!server) {
-    return redirect("/")
+    return redirect("/");
   }
 
-  const role = server.members.find((member) => member.profileId === profile.id)?.role;
+  const role = server.members.find(member => member.profileId === profile.id)
+    ?.role;
 
   return (
     <div
       className="flex flex-col h-full text-promary
-      w-full dark:bg-[#2B2D31] bg-[#f2f3f5]">
-      <ServerHeader
-        server={server}
-        role={role}
-      />
+      w-full dark:bg-[#2B2D31] bg-[#f2f3f5]"
+    >
+      <ServerHeader server={server} role={role} />
     </div>
-  )
-}
+  );
+};

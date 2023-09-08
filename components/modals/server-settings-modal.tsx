@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import {
   Dialog,
@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -21,15 +21,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { FileUpload } from '@/components/file-upload'
-import { useModal } from '@/hooks/use-modal-store'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FileUpload } from "@/components/file-upload";
+import { useModal } from "@/hooks/use-modal-store";
+import { useEffect } from "react";
 
 const schema = z.object({
-  name: z.string().min(1, { message: 'Server name is required' }).optional(),
-  imageUrl: z.string().min(1, { message: 'Server image is required' }).optional(),
+  name: z.string().min(1, { message: "Server name is required" }).optional(),
+  imageUrl: z
+    .string()
+    .min(1, { message: "Server image is required" })
+    .optional()
 });
 
 export const ServerSettingsModal = () => {
@@ -37,15 +41,22 @@ export const ServerSettingsModal = () => {
   const router = useRouter();
 
   const { server } = data;
-  const isModalOpen = isOpen && type === 'serverSettings';
+  const isModalOpen = isOpen && type === "serverSettings";
 
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: server?.name,
-      imageUrl: server?.imageUrl,
+      name: "",
+      imageUrl: ""
     }
   });
+
+  useEffect(() => {
+    if (server) {
+      form.setValue("name", server.name);
+      form.setValue("imageUrl", server.imageUrl);
+    }
+  }, [server, form]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -59,37 +70,37 @@ export const ServerSettingsModal = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleClose = () => {
     form.reset();
     onClose();
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className='bg-white text-black p-0 overflow-hidden'>
-        <DialogHeader className='pt-8 px-6'>
-          <DialogTitle className='text-2xl text-center text-bold'>
+      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+        <DialogHeader className="pt-8 px-6">
+          <DialogTitle className="text-2xl text-center text-bold">
             Server Settings!
           </DialogTitle>
-          <DialogDescription className='text-center text-zinc-500'>
+          <DialogDescription className="text-center text-zinc-500">
             Customize your server!
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-            <div className='space-y-8 px-6'>
-              <div className='flex items-center justify-center text-center'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-8 px-6">
+              <div className="flex items-center justify-center text-center">
                 <FormField
                   control={form.control}
-                  name='imageUrl'
+                  name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <FileUpload
                           endpoint="serverImage"
-                          value={field.value ? field.value : ''}
+                          value={field.value ? field.value : ""}
                           onChange={field.onChange}
                         />
                       </FormControl>
@@ -100,22 +111,23 @@ export const ServerSettingsModal = () => {
 
               <FormField
                 control={form.control}
-                name='name'
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel
-                      className='uppercase text-xs fornt-bold
+                      className="uppercase text-xs fornt-bold
                     text-zinc-500
-                      dark:text-secondary/70'>
+                      dark:text-secondary/70"
+                    >
                       Server Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className='bg-zinc-300/50 border-0
+                        className="bg-zinc-300/50 border-0
                         focus-visible:ring-0
-                      text-black focus-visible:ring-offset-0'
-                        placeholder='Enter a server name'
+                      text-black focus-visible:ring-offset-0"
+                        placeholder="Enter a server name"
                         {...field}
                       />
                     </FormControl>
@@ -124,12 +136,14 @@ export const ServerSettingsModal = () => {
                 )}
               />
             </div>
-            <DialogFooter className='bg-gray-100 px-6 py-4'>
-              <Button variant='primary' disabled={isLoading}>Save</Button>
+            <DialogFooter className="bg-gray-100 px-6 py-4">
+              <Button variant="primary" disabled={isLoading}>
+                Save
+              </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

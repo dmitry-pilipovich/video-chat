@@ -24,18 +24,18 @@ export async function PATCH(
     const existingServer = await db.server.findFirst({
       where: {
         id: serverId,
-        profileId: profile.id,
-      },
+        profileId: profile.id
+      }
     });
 
     if (existingServer) {
       const updatedServer = await db.server.update({
         where: {
-          id: serverId,
+          id: serverId
         },
         data: {
-          inviteCode: uuidv4(),
-        },
+          inviteCode: uuidv4()
+        }
       });
 
       return NextResponse.json(updatedServer);

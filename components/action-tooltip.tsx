@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Tooltip,
@@ -10,8 +10,8 @@ import {
 interface ActionTooltipProps {
   label: string;
   children: React.ReactNode;
-  side?: "top" | "right" | "bottom" | "left",
-  align?: "start" | "center" | "end",
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
 }
 
 export const ActionTooltip = ({
@@ -23,9 +23,7 @@ export const ActionTooltip = ({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={50}>
-        <TooltipTrigger asChild>
-          {children}
-        </TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent side={side} align={align}>
           <p className="fonst-semibold text-sm capitalize">
             {label.toLocaleLowerCase()}
@@ -33,5 +31,5 @@ export const ActionTooltip = ({
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
-}
+  );
+};

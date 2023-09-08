@@ -25,19 +25,19 @@ export async function PATCH(
     const existingServer = await db.server.findFirst({
       where: {
         id: serverId,
-        profileId: profile.id,
-      },
+        profileId: profile.id
+      }
     });
 
     if (existingServer) {
       const updatedServer = await db.server.update({
         where: {
-          id: serverId,
+          id: serverId
         },
         data: {
           name,
           imageUrl
-        },
+        }
       });
 
       return NextResponse.json(updatedServer);

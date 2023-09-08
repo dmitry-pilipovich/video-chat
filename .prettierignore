@@ -1,0 +1,12 @@
+.next
+docs
+public
+node_modules
+## file extensions
+*.*
+.*
++LICENSE
+!*.jsx
+!*.js
+!*.ts
+!*.tsx

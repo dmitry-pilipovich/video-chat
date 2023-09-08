@@ -7,12 +7,10 @@ import { db } from "@/lib/db";
 interface InviteCodePageProps {
   params: {
     inviteCode: string;
-  }
+  };
 }
 
-const InviteCodePage = async ({
-  params
-}: InviteCodePageProps) => {
+const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -31,7 +29,7 @@ const InviteCodePage = async ({
           id: profile.id
         }
       }
-    },
+    }
   });
 
   if (existingServer) {
@@ -40,17 +38,17 @@ const InviteCodePage = async ({
 
   const updatedServer = await db.server.update({
     where: {
-      inviteCode: params.inviteCode,
+      inviteCode: params.inviteCode
     },
     data: {
       members: {
         create: [
           {
-            profileId: profile.id,
+            profileId: profile.id
           }
         ]
-      },
-    },
+      }
+    }
   });
 
   if (updatedServer) {
@@ -58,6 +56,6 @@ const InviteCodePage = async ({
   }
 
   return null;
-}
+};
 
 export default InviteCodePage;

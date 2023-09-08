@@ -21,12 +21,12 @@ export async function POST(req: Request) {
         inviteCode: uuidv4(),
         profileId: profile.id,
         channels: {
-          create: [{ name: "general", profileId: profile.id }],
+          create: [{ name: "general", profileId: profile.id }]
         },
         members: {
-          create: [{ profileId: profile.id, role: MemberRole.ADMIN }],
-        },
-      },
+          create: [{ profileId: profile.id, role: MemberRole.ADMIN }]
+        }
+      }
     });
 
     return NextResponse.json(server);
