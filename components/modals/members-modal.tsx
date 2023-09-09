@@ -4,9 +4,13 @@ import qs from "query-string";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import {
-  Check, Gavel, Loader2,
-  MoreVertical, Shield,
-  ShieldAlert, ShieldCheck,
+  Check,
+  Gavel,
+  Loader2,
+  MoreVertical,
+  Shield,
+  ShieldAlert,
+  ShieldCheck,
   ShieldQuestion
 } from "lucide-react";
 import { useState } from "react";
@@ -56,22 +60,20 @@ export const MembersModal = () => {
       const url = qs.stringifyUrl({
         url: `/api/members/${memberId}`,
         query: {
-          serverId: server?.id,
-        },
+          serverId: server?.id
+        }
       });
 
       const response = await axios.delete(url);
 
       router.refresh();
-      onOpen("members", { server: response.data })
+      onOpen("members", { server: response.data });
     } catch (error) {
       console.error(error);
-    }
-    finally {
+    } finally {
       setLoadingId("");
     }
-  }
-
+  };
 
   const onRoleChange = async (memberId: string, role: MemberRole) => {
     try {
@@ -80,21 +82,20 @@ export const MembersModal = () => {
       const url = qs.stringifyUrl({
         url: `/api/members/${memberId}`,
         query: {
-          serverId: server.id,
-        },
+          serverId: server.id
+        }
       });
 
       const response = await axios.patch(url, { role });
 
       router.refresh();
-      onOpen("members", { server: response.data })
+      onOpen("members", { server: response.data });
     } catch (error) {
       console.error(error);
-    }
-    finally {
+    } finally {
       setLoadingId("");
     }
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
@@ -119,46 +120,52 @@ export const MembersModal = () => {
                 <p className="text-sm text-zinc-500">{member.profile.email}</p>
               </div>
               {server.profileId !== member.profileId &&
-                loadingId !== member.id && (<div className="ml-auto mr-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <MoreVertical className="h-4 w-4 text-zinc-500" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent side="left">
-                      <DropdownMenuSub>
-                        <DropdownMenuSubTrigger className="flex flex-row items-center">
-                          <ShieldQuestion className="h-4 w-4 mr-2" />
-                          <span>Role</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem onClick={() => onRoleChange(member.id, "GUEST")}>
-                              <Shield className="h-4 w-4 mr-2" />
-                              Guest
-                              {member.role === "GUEST" && (
-                                <Check className="h-4 w-4 ml-auto text-indigo-500" />
-                              )}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onRoleChange(member.id, "MODERATOR")}>
-                              <ShieldCheck className="h-4 w-4 mr-2" />
-                              Moderator
-                              {member.role === "MODERATOR" && (
-                                <Check className="h-4 w-4 ml-2 text-indigo-500" />
-                              )}
-                            </DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={() => onKick(member.id)}
-                      >
-                        <Gavel className="h-4 w-4 mr-2" />
-                        Kick
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>)}
+                loadingId !== member.id && (
+                  <div className="ml-auto mr-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <MoreVertical className="h-4 w-4 text-zinc-500" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="left">
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger className="flex flex-row items-center">
+                            <ShieldQuestion className="h-4 w-4 mr-2" />
+                            <span>Role</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem
+                                onClick={() => onRoleChange(member.id, "GUEST")}
+                              >
+                                <Shield className="h-4 w-4 mr-2" />
+                                Guest
+                                {member.role === "GUEST" && (
+                                  <Check className="h-4 w-4 ml-auto text-indigo-500" />
+                                )}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  onRoleChange(member.id, "MODERATOR")
+                                }
+                              >
+                                <ShieldCheck className="h-4 w-4 mr-2" />
+                                Moderator
+                                {member.role === "MODERATOR" && (
+                                  <Check className="h-4 w-4 ml-2 text-indigo-500" />
+                                )}
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={() => onKick(member.id)}>
+                          <Gavel className="h-4 w-4 mr-2" />
+                          Kick
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                )}
               {loadingId === member.id && (
                 <Loader2 className="animate-spin text-zinc-500 ml-auto w-4 h-4" />
               )}
