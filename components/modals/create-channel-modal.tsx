@@ -57,7 +57,7 @@ export const CreateChannelModal = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       name: "",
-      type:channelType || ChannelType.TEXT
+      type: channelType || ChannelType.TEXT
     }
   });
 
@@ -67,7 +67,7 @@ export const CreateChannelModal = () => {
     } else {
       form.setValue("type", ChannelType.TEXT);
     }
-  }, [channelType, form])
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
